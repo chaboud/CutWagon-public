@@ -2,64 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14171c">
 <meta name="robots" content="noindex, nofollow">
-<meta name="cutwagon:build" content="9356b6a756c0">
+<meta name="cutwagon:build" content="6d6d53c54214">
 <title>CutWagon</title>
 <link rel="stylesheet" href="style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23202328'/%3E%3Crect x='2' y='5' width='7' height='6' fill='%234aa3ff'/%3E%3Crect x='10' y='5' width='4' height='6' fill='%23ffd24a'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2314171c'/%3E%3Crect x='3' y='6' width='18' height='9' rx='2' fill='%23ffb547'/%3E%3Ccircle cx='7.5' cy='18' r='2' fill='%23e8eaee'/%3E%3Ccircle cx='16.5' cy='18' r='2' fill='%23e8eaee'/%3E%3C/svg%3E">
 </head>
 <body>
 <header id="topbar">
-  <div class="brand" title="CutWagon v0 — audio">Cut<span>Wagon</span></div>
-  <div class="group proj"><span id="proj-name" class="proj-name">no project</span></div>
-  <div class="group transport">
-    <button id="btn-home" title="Go to start (Home)">⏮</button>
-    <button id="btn-play" class="play" title="Play (Space)">▶</button>
-    <button id="btn-pause" title="Pause here (Enter)">⏸</button>
-    <button id="btn-stop" title="Stop and return to start of playback">⏹</button>
+  <div class="tb-left">
+    <div class="brand" title="CutWagon v0 — audio">
+      <svg class="logo" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="10" rx="2.5" fill="var(--brand)"/><rect x="6" y="7" width="2" height="10" fill="var(--panel)"/><rect x="14" y="7" width="2" height="10" fill="var(--panel)"/><circle cx="7" cy="19.5" r="2.2" fill="var(--text)"/><circle cx="17" cy="19.5" r="2.2" fill="var(--text)"/></svg>
+      <span class="word">Cut<b>Wagon</b></span>
+    </div>
+    <span class="vsep"></span>
+    <span id="proj-name" class="proj-name">no project</span>
+  </div>
+  <div class="tb-center transport">
+    <button id="btn-home" class="ib" data-icon="home" title="Go to start (Home)" aria-label="Go to start"></button>
+    <button id="btn-play" class="ib play" data-icon="play" title="Play (Space)" aria-label="Play"></button>
+    <button id="btn-pause" class="ib" data-icon="pause" title="Pause here (Enter)" aria-label="Pause"></button>
+    <button id="btn-stop" class="ib" data-icon="stop" title="Stop and return to start of playback" aria-label="Stop"></button>
     <div id="time-display" class="time">0:00.000</div>
   </div>
-  <div class="group">
-    <button id="btn-import" title="Import audio files (or drop them on the timeline)">Import…</button>
-    <input type="file" id="import-file" multiple accept="audio/*,.wav,.wave,.mp3,.ogg,.flac,.m4a,.aac,.opus" hidden>
-    <input type="file" id="take-file" multiple accept="audio/*,.wav,.wave,.mp3,.ogg,.flac,.m4a,.aac,.opus" hidden>
-    <button id="btn-split" title="Split the selected clip at the playhead (S); with nothing selected, every clip under it">Split</button>
-    <button id="btn-marker" title="Marker at the playhead (M)">Marker</button>
-    <button id="btn-ripple" title="Remove the selected time range and close the gap (Shift+Delete)">Ripple delete</button>
-    <button id="btn-insert-gap" title="Open a gap the length of the selected range at its start">Insert gap</button>
-    <span id="range-display" class="range"></span>
-  </div>
-  <div class="group">
-    <button id="btn-bounce-wav" title="Render this sequence to a 24-bit WAV file">Bounce WAV</button>
-    <button id="btn-bounce-clip" title="Render this sequence to audio and place it on a new track — shares the mix with people who lack your processing">Bounce to clip</button>
-  </div>
-  <div class="spacer"></div>
-  <div class="group collab">
+  <div class="tb-right collab">
     <div id="presence-list" class="presence"></div>
-    <input id="relay-url" class="relay-url" spellcheck="false" title="Relay WebSocket URL">
-    <button id="btn-connect" title="Connect this project to the relay">Connect</button>
-    <button id="btn-share" title="Copy a link that opens this project and connects to the relay">Share</button>
-    <input id="share-out" class="share-out" readonly title="Share link" placeholder="share link">
-    <input id="my-name" class="my-name" title="Your display name" spellcheck="false">
+    <button id="btn-connect" class="pill" title="Connect this project to the relay"><span class="dot"></span><span class="lbl">Connect</span></button>
+    <button id="btn-collab" class="primary" data-icon="share" title="Your name, the relay, and a link to this project"><span class="lbl">Share</span></button>
+    <div id="collab-panel" class="popover" hidden>
+      <h4>Share this project</h4>
+      <label class="pfield"><span>Your name</span><input id="my-name" class="my-name" title="Your display name" spellcheck="false"></label>
+      <label class="pfield relay-only"><span>Relay</span><input id="relay-url" class="relay-url" spellcheck="false" title="Relay WebSocket URL"></label>
+      <div class="prow relay-only"><button id="btn-share" data-icon="copy" title="Copy a link that opens this project and connects to the relay"><span class="lbl">Copy link</span></button><input id="share-out" class="share-out" readonly title="Share link" placeholder="share link"></div>
+      <p class="muted small relay-only">Anyone with the link opens this project and edits it with you, live, through the relay.</p>
+      <p id="collab-host-note" class="muted small" hidden>This copy cannot reach a relay, so it cannot share. Tabs of this page in one browser edit together.</p>
+    </div>
   </div>
 </header>
+
+<nav id="toolbar" aria-label="Edit">
+  <div class="group">
+    <button id="btn-import" data-icon="import" title="Import audio files (or drop them on the timeline)"><span class="lbl">Import</span></button>
+    <input type="file" id="import-file" multiple accept="audio/*,.wav,.wave,.mp3,.ogg,.flac,.m4a,.aac,.opus" hidden>
+    <input type="file" id="take-file" multiple accept="audio/*,.wav,.wave,.mp3,.ogg,.flac,.m4a,.aac,.opus" hidden>
+  </div>
+  <span class="vsep"></span>
+  <div class="group">
+    <button id="btn-split" data-icon="split" title="Split the selected clip at the playhead (S); with nothing selected, every clip under it"><span class="lbl">Split</span></button>
+    <button id="btn-marker" data-icon="marker" title="Marker at the playhead (M)"><span class="lbl">Marker</span></button>
+    <button id="btn-ripple" data-icon="ripple" title="Remove the selected time range and close the gap (Shift+Delete)"><span class="lbl">Ripple delete</span></button>
+    <button id="btn-insert-gap" data-icon="gap" title="Open a gap the length of the selected range at its start"><span class="lbl">Insert gap</span></button>
+    <button id="btn-ignore-group" data-icon="link" title="Ignore grouping: edits reach one clip at a time (Ctrl+Shift+U)"><span class="lbl">Grouping</span></button>
+    <span id="range-display" class="range"></span>
+  </div>
+  <span class="spacer"></span>
+  <div class="group">
+    <button id="btn-bounce-clip" data-icon="clip" title="Render this sequence to audio and place it on a new track — shares the mix with people who lack your processing"><span class="lbl">Bounce to clip</span></button>
+    <button id="btn-bounce-wav" data-icon="wave" title="Render this sequence to a 24-bit WAV file"><span class="lbl">Bounce WAV</span></button>
+  </div>
+</nav>
 
 <main id="workspace">
   <section id="timeline-pane">
     <div id="tl-header">
       <select id="seq-select" title="Sequence shown in the timeline"></select>
-      <button id="btn-new-seq" title="New sequence">+ Seq</button>
+      <button id="btn-new-seq" class="ib" data-icon="plus" title="New sequence" aria-label="New sequence"></button>
       <select id="nest-select" title="Place this sequence as a clip in another one"></select>
     </div>
     <div id="tl-tools">
-      <button id="btn-add-track" title="Add a track">+ Track</button>
-      <button id="btn-add-bus" title="Add a bus">+ Bus</button>
-      <button id="btn-ignore-group" title="Ignore grouping: edits reach one clip at a time (Ctrl+Shift+U)">⛓</button>
+      <button id="btn-add-track" data-icon="plus" title="Add a track"><span class="lbl">Track</span></button>
+      <button id="btn-add-bus" data-icon="bus" title="Add a bus"><span class="lbl">Bus</span></button>
       <span class="spacer"></span>
-      <button id="btn-zoom-out" title="Zoom out (-)">−</button>
-      <button id="btn-zoom-in" title="Zoom in (+)">+</button>
-      <button id="btn-fit" title="Fit the sequence (F)">Fit</button>
+      <button id="btn-zoom-out" class="ib" data-icon="zoomOut" title="Zoom out (-)" aria-label="Zoom out"></button>
+      <button id="btn-zoom-in" class="ib" data-icon="zoomIn" title="Zoom in (+)" aria-label="Zoom in"></button>
+      <button id="btn-fit" class="ib" data-icon="fit" title="Fit the sequence (F)" aria-label="Fit"></button>
     </div>
     <div id="track-headers"><div id="track-headers-inner"></div></div>
     <div id="canvas-wrap">
