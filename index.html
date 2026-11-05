@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14171c">
 <meta name="robots" content="noindex, nofollow">
-<meta name="cutwagon:build" content="757fee6ccbea">
+<meta name="cutwagon:build" content="5aa0e01576b5">
 <title>CutWagon</title>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2314171c'/%3E%3Crect x='3' y='6' width='18' height='9' rx='2' fill='%23ffb547'/%3E%3Ccircle cx='7.5' cy='18' r='2' fill='%23e8eaee'/%3E%3Ccircle cx='16.5' cy='18' r='2' fill='%23e8eaee'/%3E%3C/svg%3E">
@@ -26,6 +26,7 @@
     <button id="btn-pause" class="ib" data-icon="pause" title="Pause here (Enter)" aria-label="Pause"></button>
     <button id="btn-stop" class="ib" data-icon="stop" title="Stop and return to start of playback" aria-label="Stop"></button>
     <div id="time-display" class="time">0:00.000</div>
+    <button id="btn-tempo" class="tempo" title="Tempo and beats per bar: the grid, the bars-and-beats ruler and synth patterns follow it"><span id="tempo-val">120</span><small>bpm</small></button>
   </div>
   <div class="tb-right collab">
     <div id="presence-list" class="presence"></div>
@@ -57,6 +58,12 @@
     <button id="btn-ignore-group" data-icon="link" title="Ignore grouping: edits reach one clip at a time (Ctrl+Shift+U)"><span class="lbl">Grouping</span></button>
     <span id="range-display" class="range"></span>
   </div>
+  <span class="vsep"></span>
+  <div class="group">
+    <button id="btn-synth" data-icon="keys" title="New synth clip: a note pattern played by the built-in synthesizer"><span class="lbl">Synth</span></button>
+    <button id="btn-notes" data-icon="roll" title="Edit the selected synth clip's notes (N)"><span class="lbl">Notes</span></button>
+    <div id="synth-menu" class="popover menu" hidden></div>
+  </div>
   <span class="spacer"></span>
   <div class="group">
     <button id="btn-bounce-clip" data-icon="clip" title="Render this sequence to audio and place it on a new track — shares the mix with people who lack your processing"><span class="lbl">Bounce to clip</span></button>
@@ -65,6 +72,7 @@
 </nav>
 
 <main id="workspace">
+  <div id="main-col">
   <section id="timeline-pane">
     <div id="tl-header">
       <select id="seq-select" title="Sequence shown in the timeline"></select>
@@ -85,6 +93,17 @@
       <div id="empty-msg" class="empty-msg"></div>
     </div>
   </section>
+  <section id="roll-pane" hidden aria-label="Note editor">
+    <div class="roll-bar">
+      <span class="roll-ico" aria-hidden="true"></span>
+      <div id="roll-title" class="roll-title"></div>
+      <div id="roll-tools" class="roll-tools"></div>
+      <span class="spacer"></span>
+      <button id="roll-close" class="ib" data-icon="x" title="Close the note editor (N)" aria-label="Close the note editor"></button>
+    </div>
+    <div id="roll-wrap"><canvas id="roll"></canvas></div>
+  </section>
+  </div>
 
   <aside id="sidebar">
     <nav id="tabs">
@@ -142,13 +161,18 @@
 <footer id="statusbar">
   <span id="relay-state" class="st offline">relay: off</span>
   <span id="here-count" class="st"></span>
-  <span id="st-render" class="st"></span>
-  <span id="st-cache" class="st"></span>
-  <span id="st-audio" class="st"></span>
-  <span class="spacer"></span>
   <span id="st-doc" class="st"></span>
-  <span id="st-peer" class="st"></span>
-  <span id="st-core" class="st muted"></span>
+  <span class="spacer"></span>
+  <details id="st-more" class="st-more">
+    <summary title="Engine details: render, cache, audio">Engine</summary>
+    <div class="st-pop">
+      <span id="st-render" class="st"></span>
+      <span id="st-cache" class="st"></span>
+      <span id="st-audio" class="st"></span>
+      <span id="st-peer" class="st"></span>
+      <span id="st-core" class="st muted"></span>
+    </div>
+  </details>
 </footer>
 
 <div id="toasts" aria-live="polite"></div>
