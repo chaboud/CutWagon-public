@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14171c">
 <meta name="robots" content="noindex, nofollow">
-<meta name="cutwagon:build" content="0650d88d340f">
+<meta name="cutwagon:build" content="3a9830052dcc">
 <title>CutWagon</title>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2314171c'/%3E%3Crect x='3' y='6' width='18' height='9' rx='2' fill='%23ffb547'/%3E%3Ccircle cx='7.5' cy='18' r='2' fill='%23e8eaee'/%3E%3Ccircle cx='16.5' cy='18' r='2' fill='%23e8eaee'/%3E%3C/svg%3E">
@@ -19,6 +19,7 @@
     </div>
     <span class="vsep"></span>
     <span id="proj-name" class="proj-name">no project</span>
+    <span class="solo-only solo-title">K5000S <small>additive synthesizer · a CutWagon instrument</small></span>
   </div>
   <div class="tb-center transport">
     <button id="btn-home" class="ib" data-icon="home" title="Go to start (Home)" aria-label="Go to start"></button>
@@ -27,6 +28,9 @@
     <button id="btn-stop" class="ib" data-icon="stop" title="Stop and return to start of playback" aria-label="Stop"></button>
     <div id="time-display" class="time">0:00.000</div>
     <button id="btn-tempo" class="tempo" title="Tempo and beats per bar: the grid, the bars-and-beats ruler and synth patterns follow it"><span id="tempo-val">120</span><small>bpm</small></button>
+  </div>
+  <div class="tb-right solo-only">
+    <a id="solo-exit" class="btn-link" href="#" title="Open the CutWagon editor: projects, the timeline, K5000 clips you can record into">Open the editor</a>
   </div>
   <div class="tb-right collab">
     <div id="presence-list" class="presence"></div>
@@ -153,6 +157,7 @@
       <div class="try">
         <h3>Try it</h3>
         <button id="btn-demo" class="primary" type="button">Build the demo project</button>
+        <a id="btn-solo-k5k" class="btn-link" href="#k5000" title="The K5000 clone on its own: knobs, keyboard, typing and MIDI, no project needed">Play the K5000S on its own</a>
         <p class="muted small">Drums as a looped sub-mix, a bass clip with two takes grouped with a stereo pad. Synthesized in this browser; nothing is downloaded.</p>
       </div>
       <p id="host-note" class="note small" hidden>This copy runs entirely in your browser and keeps projects on this device. Tabs of this page share edits live. Editing with other people needs the relay, which this host cannot reach: run CutWagon locally (<code>python service/relay/relay.py --web web</code>) and use Share.</p>
