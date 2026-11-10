@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="cutwagon:build" content="fea9bbb53a7a">
+<title>CutWagon — render benchmark</title>
+<style>
+  :root { color-scheme: dark; --bg: #14161a; --panel: #1d2026; --line: #333843; --text: #e8eaee; --dim: #9aa3b2; --accent: #6ea8ff; --bad: #ff8a7a; --good: #7fd6a0; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 20px; margin: 4px 0 2px; }
+  h2 { font-size: 16px; margin: 0 0 6px; }
+  p { margin: 6px 0; color: var(--dim); }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin: 12px 0; }
+  button { font: inherit; color: var(--text); background: #2a2f3a; border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button:disabled { opacity: .5; cursor: default; }
+  button.go { background: #24406e; border-color: #3b62a3; }
+  label { color: var(--dim); margin-right: 12px; white-space: nowrap; }
+  select, input[type=number] { font: inherit; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; }
+  input[type=number] { width: 4.5em; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; margin: 8px 0; display: block; overflow-x: auto; }
+  th, td { text-align: right; padding: 3px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--dim); font-weight: 500; }
+  .ok { color: var(--good); } .bad { color: var(--bad); } .dim { color: var(--dim); }
+  #status { position: sticky; top: 0; background: var(--bg); padding: 6px 0; z-index: 1; min-height: 1.4em; }
+  textarea { width: 100%; box-sizing: border-box; height: 260px; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px; font: 12px/1.4 ui-monospace, Menlo, Consolas, monospace; padding: 8px; }
+  code { font: 13px ui-monospace, Menlo, Consolas, monospace; color: var(--text); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Render benchmark</h1>
+  <p>The same pictures rendered by the CPU reference, by a pool of workers, and by this machine's GPU — with how long each took and how far the GPU's pixels are from the reference's. Everything runs in this page; nothing is uploaded. When it has finished, copy the text at the bottom.</p>
+  <div id="status" role="status" aria-live="polite"></div>
+
+  <section>
+    <h2>This machine</h2>
+    <table id="env"></table>
+  </section>
+
+  <section>
+    <h2>Workers</h2>
+    <p>A busy 1920 × 1080 video frame (every tile changes every frame) and a still picture of eight nodes, rendered by one engine and by 1…N helper workers, each with its own instance of the engine. The pixels must be identical; the time should fall.</p>
+    <div class="row">
+      <label>Up to <input type="number" id="w-max" min="1" max="8" value="4"> helpers</label>
+      <label>Frames each <input type="number" id="w-frames" min="2" max="60" value="6"></label>
+      <label><input type="checkbox" id="w-video" checked> video clip (else a panned still)</label>
+      <button class="go" id="run-workers">Run</button>
+    </div>
+    <div id="workers"></div>
+  </section>
+
+  <section>
+    <h2>CPU and GPU</h2>
+    <p>A comp whose nodes all have kernels (exposure, two gradients blended over, a blur, a transform, a grade through a table, a sharpen), rendered at full size by the reference and by WebGPU. <b>N↔G</b> is what you would see differ; <b>K↔G</b> is what this GPU's arithmetic adds to the same program run on the CPU.</p>
+    <div class="row">
+      <label><input type="checkbox" id="g-1080" checked> 1920 × 1080</label>
+      <label><input type="checkbox" id="g-4k"> 3840 × 2160</label>
+      <label><input type="checkbox" id="g-half"> also with half-float textures</label>
+      <label>Runs <input type="number" id="g-runs" min="1" max="20" value="3"></label>
+      <button class="go" id="run-gpu">Run</button>
+    </div>
+    <div id="gpu"></div>
+  </section>
+
+  <section>
+    <h2>Kernel by kernel</h2>
+    <p>One small picture per kind of kernel (640 × 360), three ways: the reference (N), the kernel on the CPU (K), the kernel on the GPU (G). Counts are pixels that differ after cooking back to 8 and 16 bits, laid over black.</p>
+    <div class="row"><button class="go" id="run-kernels">Run</button></div>
+    <div id="kernels"></div>
+  </section>
+
+  <section>
+    <h2>Results as text</h2>
+    <div class="row"><button class="go" id="run-all">Run everything</button><button id="copy">Copy</button><span id="copied" class="dim"></span></div>
+    <textarea id="report" readonly aria-label="Results as text"></textarea>
+  </section>
+</main>
+<script type="module" src="bench.js"></script>
+</body>
+</html>
