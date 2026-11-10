@@ -1,5 +1,5 @@
 {
-  "source": "674da035b13d",
-  "subject": "merge the picture engine, image editor and node compositor; undo covers picture edits",
-  "built": "2026-11-10T07:15:07.788Z"
+  "source": "5638a3a27223",
+  "subject": "log video editing; the picture test waits for the pane's text, not for it being open",
+  "built": "2026-11-10T08:53:43.408Z"
 }

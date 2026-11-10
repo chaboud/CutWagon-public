@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14171c">
 <meta name="robots" content="noindex, nofollow">
-<meta name="cutwagon:build" content="674da035b13d">
+<meta name="cutwagon:build" content="5638a3a27223">
 <title>CutWagon</title>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2314171c'/%3E%3Crect x='3' y='6' width='18' height='9' rx='2' fill='%23ffb547'/%3E%3Ccircle cx='7.5' cy='18' r='2' fill='%23e8eaee'/%3E%3Ccircle cx='16.5' cy='18' r='2' fill='%23e8eaee'/%3E%3C/svg%3E">
@@ -54,8 +54,8 @@
   </div>
   <span class="vsep"></span>
   <div class="group">
-    <button id="btn-import" data-icon="import" title="Import audio files (or drop them on the timeline)"><span class="lbl">Import</span></button>
-    <input type="file" id="import-file" multiple accept="audio/*,.wav,.wave,.mp3,.ogg,.flac,.m4a,.aac,.opus" hidden>
+    <button id="btn-import" data-icon="import" title="Import audio, video or images (or drop them on the timeline): pictures go on a video track, sound on an audio track"><span class="lbl">Import</span></button>
+    <input type="file" id="import-file" multiple accept="audio/*,video/*,image/*,.wav,.wave,.mp3,.ogg,.flac,.m4a,.aac,.opus,.webm,.mp4,.mov,.png,.jpg,.jpeg,.webp" hidden>
     <input type="file" id="take-file" multiple accept="audio/*,.wav,.wave,.mp3,.ogg,.flac,.m4a,.aac,.opus" hidden>
   </div>
   <span class="vsep"></span>
@@ -90,14 +90,17 @@
 
 <main id="workspace">
   <div id="main-col">
+  <section id="viewer-pane" hidden aria-label="Viewer"></section>
   <section id="timeline-pane">
     <div id="tl-header">
       <select id="seq-select" title="Sequence shown in the timeline"></select>
       <button id="btn-new-seq" class="ib" data-icon="plus" title="New sequence" aria-label="New sequence"></button>
       <select id="nest-select" title="Place this sequence as a clip in another one"></select>
+      <button id="btn-viewer" class="ib" data-icon="monitor" title="Show or hide the viewer: this sequence's picture" aria-label="Viewer"></button>
     </div>
     <div id="tl-tools">
       <button id="btn-add-track" data-icon="plus" title="Add a track"><span class="lbl">Track</span></button>
+      <button id="btn-add-vtrack" data-icon="image" title="Add a video track (on top: upper video tracks lie over lower ones)"><span class="lbl">Video</span></button>
       <button id="btn-add-bus" data-icon="bus" title="Add a bus"><span class="lbl">Bus</span></button>
       <span class="spacer"></span>
       <button id="btn-sound-view" class="ib" data-icon="sound" title="Open this sequence in the sound editor: every sample, selections, processes" aria-label="Sound editor"></button>
