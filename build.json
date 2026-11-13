@@ -1,5 +1,5 @@
 {
-  "source": "fea9bbb53a7a",
-  "subject": "merge float pictures, effects in time and the budgeted pool; the four branches now agree",
-  "built": "2026-11-10T18:07:52.599Z"
+  "source": "6019faf24963",
+  "subject": "the history test's wait for two copies to agree read one head once; it reads both each round",
+  "built": "2026-11-13T18:06:09.717Z"
 }

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14171c">
 <meta name="robots" content="noindex, nofollow">
-<meta name="cutwagon:build" content="fea9bbb53a7a">
+<meta name="cutwagon:build" content="6019faf24963">
 <title>CutWagon</title>
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2314171c'/%3E%3Crect x='3' y='6' width='18' height='9' rx='2' fill='%23ffb547'/%3E%3Ccircle cx='7.5' cy='18' r='2' fill='%23e8eaee'/%3E%3Ccircle cx='16.5' cy='18' r='2' fill='%23e8eaee'/%3E%3C/svg%3E">
@@ -75,6 +75,8 @@
     <button id="btn-k5k" data-icon="knob" title="K5000: new K5000 clips, load .syx patches, and the onscreen controller (K)"><span class="lbl">K5000</span></button>
     <div id="k5k-menu" class="popover menu k5k-menu" hidden></div>
     <input type="file" id="k5k-file" accept=".syx,.mid,.ka1,.kb1,.kaa,.kba,.kc1,.kca,.sys,.zip,application/octet-stream,application/zip" multiple hidden>
+    <button id="btn-rack" data-icon="seq" title="Rack: new instrument clips, and the rack — a keyboard, an arpeggiator and a step sequencer for any instrument (Shift+K)"><span class="lbl">Rack</span></button>
+    <div id="rack-menu" class="popover menu rack-menu" hidden></div>
   </div>
   <span class="vsep"></span>
   <div class="group">
@@ -125,6 +127,7 @@
     <div id="roll-wrap"><canvas id="roll"></canvas></div>
   </section>
   <section id="k5k-pane" hidden aria-label="K5000 controller"></section>
+  <section id="rack-pane" hidden aria-label="Rack"></section>
   <section id="sound-pane" hidden aria-label="Sound editor"></section>
   <section id="pic-pane" hidden aria-label="Picture editor"></section>
   </div>
@@ -180,6 +183,7 @@
         <h3>Try it</h3>
         <button id="btn-demo" class="primary" type="button">Build the demo project</button>
         <a id="btn-solo-k5k" class="btn-link" href="#k5000" title="The K5000 clone on its own: knobs, keyboard, typing and MIDI, no project needed">Play the K5000S on its own</a>
+        <a id="btn-solo-rack" class="btn-link" href="#rack" title="The rack on its own: any instrument with a keyboard, an arpeggiator and a step sequencer, no project needed">Play the rack on its own</a>
         <p class="muted small">Drums as a looped sub-mix, a bass clip with two takes grouped with a stereo pad. Synthesized in this browser; nothing is downloaded.</p>
       </div>
       <p id="host-note" class="note small" hidden>This copy runs entirely in your browser and keeps projects on this device. Tabs of this page share edits live. Editing with other people needs the relay, which this host cannot reach: run CutWagon locally (<code>python service/relay/relay.py --web web</code>) and use Share.</p>
@@ -200,6 +204,8 @@
       <span id="st-render" class="st"></span>
       <span id="st-cache" class="st"></span>
       <span id="st-audio" class="st"></span>
+      <span id="st-live" class="st"></span>
+      <select id="st-background" class="bg-choice" aria-label="When this tab is in the background" title="When this tab is in the background: keep playing, in time, or pause and carry on from the same place when you come back. Kept in this browser; it applies to the instruments and to the timeline."><option value="keep">Background: keep playing</option><option value="pause">Background: pause</option></select>
       <span id="st-peer" class="st"></span>
       <span id="st-core" class="st muted"></span>
     </div>
